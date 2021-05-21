@@ -88,7 +88,7 @@ module fan20(facing = true) {
         rotate([90, 0, 0]) {
             mirror([0, 0, facing ? 1 : 0]) {
                 fan(size = fan_size, thickness = fan_thickness, blade = 9, 
-                    screw_dia = 4.3, screw_dis = 154);
+                    screw_dia = 4.3, screw_dis = fan_mount_spacing);
             }
         }
     }
@@ -102,14 +102,29 @@ module rad_fans() {
         fan20();
         translate([0, 0, fan_size]) fan20();
     }
+    translate([(width - fan_size) / 2, 
+                ext_sidelen + alu_thickness + rad_depth, 
+                unit_space + ext_sidelen + unit_space * 4 + rad_bottom_height]) {
+        fan20();
+        translate([0, 0, fan_size]) fan20();
+    }
     // back
-    if (mobo_ff != "mITX" && mobo_ff != "mDTX") 
+    if (mobo_ff != "mITX" && mobo_ff != "mDTX") {
         translate([(width - fan_size) / 2, 
                     depth - ext_sidelen, 
                     unit_space + ext_sidelen + unit_space * 4 + rad_bottom_height]) {
             fan20(false);
             translate([0, 0, fan_size]) fan20(false);
         }
+    }
+    if (mobo_ff != "mITX" && mobo_ff != "mDTX") {
+        translate([(width - fan_size) / 2, 
+                    depth - ext_sidelen - alu_thickness - rad_depth - fan_thickness, 
+                    unit_space + ext_sidelen + unit_space * 4 + rad_bottom_height]) {
+            fan20(false);
+            translate([0, 0, fan_size]) fan20(false);
+        }
+    }
 }
 
 module rad_fan_mounts() {
@@ -177,7 +192,6 @@ module rad_fan_mounts() {
     if (mobo_ff != "mITX" && mobo_ff != "mDTX") 
         translate([ 0, 
                     depth - ext_sidelen - alu_thickness, 
-                    unit_space + ext_sidelen + unit_space * 4 + rad_bottom_height]) {
+                    unit_space + ext_sidelen + unit_space * 4 + rad_bottom_height]) 
             _set();
-        }
 }

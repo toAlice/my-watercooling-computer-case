@@ -73,7 +73,8 @@ rad_bottom_height = 15;
 rad_full_height = rad_top_height + rad_body_height + rad_bottom_height;
 rad_width = 200;
 rad_depth = 48;
-rad_clearance = unit_space * 8;
+rad_front_clearance = unit_space * 8 + fan_thickness;
+rad_back_clearance = unit_space * 4 + fan_thickness;
 
 alu_thickness = 2;
 pcie_mount_thickness = 1.03;
@@ -103,7 +104,7 @@ height = unit_space + ext_sidelen
                 + max(mobo_width, gpu_pcb_length) + mobo_offset) 
         + ext_sidelen + unit_space;
 width = ext_sidelen + unit_space + fan_size + unit_space + ext_sidelen;
-depth = ext_sidelen + alu_thickness + rad_depth + rad_clearance
-        + mobo_height + rad_clearance + rad_depth + alu_thickness 
+depth = ext_sidelen + alu_thickness + rad_depth + rad_front_clearance
+        + mobo_height + rad_back_clearance + rad_depth + alu_thickness 
         + ext_sidelen;
 

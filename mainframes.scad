@@ -61,7 +61,7 @@ module mainframes() {
     // mobo mount row 0
     translate([ width - ext_sidelen, 
                 ext_sidelen + alu_thickness + rad_depth 
-                    + rad_clearance - ext_sidelen / 2  
+                    + rad_front_clearance - ext_sidelen / 2  
                     + screw_row_0_to_top, 
                 unit_space + ext_sidelen ]) {
         zext(height - unit_space * 2 - ext_sidelen * 2);
@@ -69,7 +69,7 @@ module mainframes() {
     // mobo mount row 1
     translate([ width - ext_sidelen, 
                 ext_sidelen + alu_thickness + rad_depth 
-                    + rad_clearance - ext_sidelen / 2  
+                    + rad_front_clearance - ext_sidelen / 2  
                     + screw_row_1_to_top, 
                 unit_space + ext_sidelen ]) {
         zext(height - unit_space * 2 - ext_sidelen * 2);
@@ -78,7 +78,7 @@ module mainframes() {
     if (mobo_ff != "mITX" && mobo_ff != "mDTX") 
         translate([ width - ext_sidelen, 
                     ext_sidelen + alu_thickness + rad_depth 
-                        + rad_clearance - ext_sidelen / 2  
+                        + rad_front_clearance - ext_sidelen / 2  
                         + screw_row_2_to_top, 
                     unit_space + ext_sidelen ]) {
             zext(height - unit_space * 2 - ext_sidelen * 2);

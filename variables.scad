@@ -83,7 +83,7 @@ rad_top_clearance = unit_space * -2;
 rad_bottom_clearance = unit_space * -2;
 
 alu_thickness = 2;
-pcie_mount_thickness = 1.03;
+pci_mount_thickness = 1.03;
 
 gpu_thickness = 4;
 gpu_sidelen = 73;
@@ -92,9 +92,9 @@ gpu_pcb_length = 150;
 // gpu_pcb_length = inches2mm(12);
 gpu_pcb_height = 118.25;
 
-pcie_shift = (mobo_ff == "mITX" || mobo_ff == "mDTX" || mobo_ff == "mATX") ? 0 : 1;
-pcie_lock_multiplier = ((mobo_ff == "mITX" || mobo_ff == "mDTX") ? 4 : 7)
-                       - pcie_shift;
+pci_shift = (mobo_ff == "mITX" || mobo_ff == "mDTX" || mobo_ff == "mATX") ? 0 : 1;
+pci_lock_multiplier = ((mobo_ff == "mITX" || mobo_ff == "mDTX") ? 4 : 7)
+                       - pci_shift;
 
 mobo_clearance = 5;
 

@@ -1,13 +1,13 @@
 # my-watercooling-computer-case
 
-OpenSCAD project
+An [OpenSCAD](https://openscad.org/) project
 
 ## watercooling parts 
 
-IceMan dual D5 pump top.  
-Alphacool VP-755 pump * 2   
-Alphacool NexXxoS 400 mm XT45 radiator * 2 (* 1 for mITX/mDTX/mATX boards)  
-Noctua A20 Fan * 4 (* 2 for mITX/mDTX boards)
+- IceMan dual D5 pump top.  
+- Alphacool VP-755 pump * 2   
+- Alphacool NexXxoS 400 mm XT45 radiator * 2 (* 1 for mITX/mDTX/mATX boards)  
+- Noctua A20 Fan * 8 (* 4 for mITX/mDTX/mATX boards)
 
 ## Supported mainboards
 

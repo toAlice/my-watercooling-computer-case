@@ -23,7 +23,7 @@ translate([ width - (ext_sidelen + mobo_clearance),
         }
     }
     translate([ -pci_to_mobo - mobo_thickness,
-                pci_socket_to_top + pci_socket_distance * pcie_shift,
+                pci_socket_to_top + pci_socket_distance * pci_shift,
                 -pci_socket_indent ]) {
         rotate([ -90, 0, 0 ]) {
             rotate([ 0, -90, 0 ]) {
@@ -33,7 +33,7 @@ translate([ width - (ext_sidelen + mobo_clearance),
     }
     if (mobo_ff != "mITX" && mobo_ff != "mDTX") 
         translate([ -pci_to_mobo - mobo_thickness,
-                    pci_socket_to_top + pci_socket_distance * (pcie_shift + 2),
+                    pci_socket_to_top + pci_socket_distance * (pci_shift + 2),
                     -pci_socket_indent ]) {
             rotate([ -90, 0, 0 ]) {
                 rotate([ 0, -90, 0 ]) {
@@ -106,9 +106,9 @@ translate([ pump_mount_size + ext_sidelen,
 translate([ ext_sidelen,
             ext_sidelen + alu_thickness + rad_depth
             + rad_front_clearance + pci_socket_to_top 
-            + pci_socket_distance * pcie_shift - gpu_pcb_thickness / 2 
-            - pcie_mount_thickness - (21.59 - 18.42) 
+            + pci_socket_distance * pci_shift - gpu_pcb_thickness / 2 
+            - pci_mount_thickness - (21.59 - 18.42) 
             - (mobo_offset + (57.15 - 49.65) - 9.40) / 2 
-            - pcie_mount_thickness,
+            - pci_mount_thickness,
             height - unit_space ]) 
     pcie_mount();

@@ -87,55 +87,55 @@ module mainframes() {
 
 module pcie_mount() {
     module lineup() {
-        for (i = [0: pcie_lock_multiplier - 1]) {
+        for (i = [0: pci_lock_multiplier - 1]) {
             translate([20.32 * i, 0, 0]) children(0);
         }
     }
     mount_height = width - ext_sidelen * 2 
                     - (mobo_clearance + mobo_thickness 
-                    + 16.15 - 8.25 + 100.36 + pcie_mount_thickness);
+                    + 16.15 - 8.25 + 100.36 + pci_mount_thickness);
     module _mount() {
         difference() { // aluminum
             cube([ pci_socket_distance, 
-                ext_sidelen, pcie_mount_thickness ]);
+                ext_sidelen, pci_mount_thickness ]);
             translate([ pci_socket_distance / 2, ext_sidelen / 2, -0.01 ])
                 cylinder(d = alu_ext_screw_hole_size, 
-                         h = pcie_mount_thickness + 0.02);
+                         h = pci_mount_thickness + 0.02);
         }
         
         cube([ pci_socket_distance, 
-            pcie_mount_thickness, 
+            pci_mount_thickness, 
             mount_height ]);
 
         // pcie panel
-        translate([0, 0, mount_height - pcie_mount_thickness]) {
+        translate([0, 0, mount_height - pci_mount_thickness]) {
             difference() {
                 cube([ pci_socket_distance,
                      mobo_offset + (57.15 - 49.65) - 9.40,
-                     pcie_mount_thickness ]);
+                     pci_mount_thickness ]);
                 translate([ pci_socket_distance / 2, 
-                            pcie_mount_thickness + (mobo_offset + (57.15 - 49.65) - 9.40) / 2,
+                            pci_mount_thickness + (mobo_offset + (57.15 - 49.65) - 9.40) / 2,
                             -0.01 ])
                     cylinder(d = 3.5, 
-                             h = pcie_mount_thickness + 0.02);
+                             h = pci_mount_thickness + 0.02);
             }
         }
         // pcie lock
-        translate([0, 0, mount_height + pcie_mount_thickness]) {
+        translate([0, 0, mount_height + pci_mount_thickness]) {
             difference() {
                 cube([ pci_socket_distance,
                      mobo_offset + (57.15 - 49.65) - 9.40,
-                     pcie_mount_thickness ]);
+                     pci_mount_thickness ]);
                 translate([ pci_socket_distance / 2, 
-                            pcie_mount_thickness + (mobo_offset + (57.15 - 49.65) - 9.40) / 2,
+                            pci_mount_thickness + (mobo_offset + (57.15 - 49.65) - 9.40) / 2,
                             -0.01 ])
                     cylinder(d = 3.5, 
-                             h = pcie_mount_thickness + 0.02);
+                             h = pci_mount_thickness + 0.02);
             }
         }
     }
     color("#A7CF36") 
-        translate([0, pci_socket_distance * pcie_lock_multiplier]) 
+        translate([0, pci_socket_distance * pci_lock_multiplier]) 
             rotate([0, 90, 0])  
                 rotate([0, 0, -90])  
                     lineup() 

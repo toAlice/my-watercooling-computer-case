@@ -1,6 +1,10 @@
 // constans
 mobo_thickness = 2.36;
+// mobo_ff = "EATX";
 mobo_ff = "ATX";
+// mobo_ff = "mATX";
+// mobo_ff = "mDTX";
+// mobo_ff = "mITX";
 
 function inches2mm(inches = 0) = (25.4 * inches);
 
@@ -12,7 +16,7 @@ mATX_width = inches2mm(9.6);
 mATX_height = inches2mm(9.6);
 ATX_width = inches2mm(9.6);
 ATX_height = inches2mm(12);
-EATX_width = inches2mm(13);
+EATX_width = inches2mm(13); // full size E-ATX / EEB
 EATX_height = inches2mm(12);
 
 pci_socket_to_top = inches2mm(12 - 0.65 - 3.1) - 47.29;
@@ -75,6 +79,8 @@ rad_width = 200;
 rad_depth = 48;
 rad_front_clearance = unit_space * 8 + fan_thickness;
 rad_back_clearance = unit_space * 4 + fan_thickness;
+rad_top_clearance = unit_space * -2;
+rad_bottom_clearance = unit_space * -2;
 
 alu_thickness = 2;
 pcie_mount_thickness = 1.03;
@@ -86,11 +92,13 @@ gpu_pcb_length = 150;
 // gpu_pcb_length = inches2mm(12);
 gpu_pcb_height = 118.25;
 
-pcie_shift = (mobo_ff == "mITX" || mobo_ff == "mDTX") ? 0 : 1;
+pcie_shift = (mobo_ff == "mITX" || mobo_ff == "mDTX" || mobo_ff == "mATX") ? 0 : 1;
+pcie_lock_multiplier = ((mobo_ff == "mITX" || mobo_ff == "mDTX") ? 4 : 7)
+                       - pcie_shift;
 
 mobo_clearance = 5;
 
-psu_length = 175;
+psu_length = 150;
 psu_in_cabel_space = 40;
 psu_side_clearance = 2;
 psu_bottom_clearance = 2;
@@ -99,7 +107,7 @@ pump_mount_size = 120;
 reservoir_height = 200;
 
 height = unit_space + ext_sidelen 
-        + max(unit_space * 4 + rad_full_height + unit_space, 
+        + max(rad_bottom_clearance + rad_full_height + rad_top_clearance, 
             psu_side_clearance + psu_atx_width + psu_side_clearance 
                 + max(mobo_width, gpu_pcb_length) + mobo_offset) 
         + ext_sidelen + unit_space;

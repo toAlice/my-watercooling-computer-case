@@ -86,9 +86,8 @@ module mainframes() {
 }
 
 module pcie_mount() {
-    count = (mobo_ff == "mITX" || mobo_ff == "mDTX") ? 4 : 7;
     module lineup() {
-        for (i = [0: count - 1]) {
+        for (i = [0: pcie_lock_multiplier - 1]) {
             translate([20.32 * i, 0, 0]) children(0);
         }
     }
@@ -136,7 +135,7 @@ module pcie_mount() {
         }
     }
     color("#A7CF36") 
-        translate([0, pci_socket_distance * count]) 
+        translate([0, pci_socket_distance * pcie_lock_multiplier]) 
             rotate([0, 90, 0])  
                 rotate([0, 0, -90])  
                     lineup() 

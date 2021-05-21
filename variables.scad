@@ -67,7 +67,7 @@ fan_thickness = 30;
 fan_size = 200;
 fan_mount_spacing = 154;
 
-rad_top_height=25;
+rad_top_height=30;
 rad_body_height = 400;
 rad_bottom_height = 15;
 rad_full_height = rad_top_height + rad_body_height + rad_bottom_height;
@@ -95,7 +95,7 @@ psu_side_clearance = 2;
 psu_bottom_clearance = 2;
 
 pump_mount_size = 120;
-reservoir_height = 135;
+reservoir_height = 200;
 
 height = unit_space + ext_sidelen 
         + max(unit_space * 4 + rad_full_height + unit_space, 

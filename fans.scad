@@ -102,24 +102,10 @@ module rad_fans() {
         fan20();
         translate([0, 0, fan_size]) fan20();
     }
-    translate([(width - fan_size) / 2, 
-                ext_sidelen + alu_thickness + rad_depth, 
-                unit_space + ext_sidelen + rad_bottom_clearance + rad_bottom_height]) {
-        fan20();
-        translate([0, 0, fan_size]) fan20();
-    }
     // back
     if (mobo_ff != "mITX" && mobo_ff != "mDTX") {
         translate([(width - fan_size) / 2, 
                     depth - ext_sidelen, 
-                    unit_space + ext_sidelen + rad_bottom_clearance + rad_bottom_height]) {
-            fan20(false);
-            translate([0, 0, fan_size]) fan20(false);
-        }
-    }
-    if (mobo_ff != "mITX" && mobo_ff != "mDTX" && mobo_ff != "mATX") {
-        translate([(width - fan_size) / 2, 
-                    depth - ext_sidelen - alu_thickness - rad_depth - fan_thickness, 
                     unit_space + ext_sidelen + rad_bottom_clearance + rad_bottom_height]) {
             fan20(false);
             translate([0, 0, fan_size]) fan20(false);

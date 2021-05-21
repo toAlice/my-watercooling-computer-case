@@ -77,8 +77,8 @@ rad_bottom_height = 15;
 rad_full_height = rad_top_height + rad_body_height + rad_bottom_height;
 rad_width = 200;
 rad_depth = 48;
-rad_front_clearance = unit_space * 8 + fan_thickness;
-rad_back_clearance = unit_space * 4 + fan_thickness;
+rad_front_clearance = unit_space * 8;
+rad_back_clearance = unit_space * 4;
 rad_top_clearance = unit_space * -2;
 rad_bottom_clearance = unit_space * -2;
 

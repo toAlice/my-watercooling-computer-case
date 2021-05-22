@@ -6,6 +6,8 @@ mobo_ff = "ATX";
 // mobo_ff = "mDTX";
 // mobo_ff = "mITX";
 
+sandwich = true;
+
 function inches2mm(inches = 0) = (25.4 * inches);
 
 mITX_width = inches2mm(6.7);
@@ -30,6 +32,8 @@ psu_flex_width = 81.5;
 psu_flex_height = 40.5;
 psu_atx_width = 150;
 psu_atx_height = 86;
+
+alu_thickness = 1.5;
 
 screw_col_0_to_back = inches2mm(0.4);
 screw_col_1_to_back = inches2mm(0.4 + 6.1);
@@ -66,10 +70,13 @@ mobo_offset = ext_sidelen / 2 + 4;
 unit_space = 5;
 
 alu_ext_screw_hole_size = 4;
+m3_screw_hole_size = 3;
 
 fan_thickness = 30;
 fan_size = 200;
-fan_mount_spacing = 154;
+
+fan_mounting_holes = 170;
+rad_mounting_holes = 185;
 
 rad_top_height=30;
 rad_body_height = 400;
@@ -77,12 +84,15 @@ rad_bottom_height = 15;
 rad_full_height = rad_top_height + rad_body_height + rad_bottom_height;
 rad_width = 200;
 rad_depth = 48;
-rad_front_clearance = unit_space * 8;
-rad_back_clearance = unit_space * 4;
 rad_top_clearance = unit_space * -2;
 rad_bottom_clearance = unit_space * -2;
 
-alu_thickness = 2;
+front_rad_clearance = unit_space * 8 
+                      + (sandwich ? alu_thickness + fan_thickness : 0);
+back_rad_clearance = unit_space * 4 
+                     + (sandwich ? alu_thickness + fan_thickness : 0);
+
+
 pci_mount_thickness = 1.03;
 
 gpu_thickness = 4;
@@ -104,15 +114,15 @@ psu_side_clearance = 2;
 psu_bottom_clearance = 2;
 
 pump_mount_size = 120;
-reservoir_height = 200;
+reservoir_height = 300;
 
-height = unit_space + ext_sidelen 
+height = ext_sidelen 
         + max(rad_bottom_clearance + rad_full_height + rad_top_clearance, 
             psu_side_clearance + psu_atx_width + psu_side_clearance 
                 + max(mobo_width, gpu_pcb_length) + mobo_offset) 
-        + ext_sidelen + unit_space;
+        + ext_sidelen;
 width = ext_sidelen + unit_space + fan_size + unit_space + ext_sidelen;
-depth = ext_sidelen + alu_thickness + rad_depth + rad_front_clearance
-        + mobo_height + rad_back_clearance + rad_depth + alu_thickness 
+depth = ext_sidelen + alu_thickness + rad_depth + front_rad_clearance
+        + mobo_height + back_rad_clearance + rad_depth + alu_thickness 
         + ext_sidelen;
 

@@ -3,7 +3,7 @@ include <variables.scad>
 module radiator(body_height = rad_body_height, body_width = rad_width, 
                 body_depth = rad_depth,
                 top_height = rad_top_height, bottom_height = rad_bottom_height, 
-                mount_spacing = fan_mount_spacing) {
+                mount_spacing = fan_mounting_holes) {
     module top() {
         color("#4F4F4F") translate([body_width * 0.025, body_depth * 0.05, 0]) 
             cube([ body_width * 0.45, body_depth * 0.9, top_height]);
@@ -35,13 +35,13 @@ module radiators() {
     // front
     translate([ (width - fan_size) / 2, 
                 ext_sidelen + alu_thickness, 
-                unit_space + ext_sidelen + rad_bottom_clearance ]) {
+                ext_sidelen + rad_bottom_clearance ]) {
         radiator();
     }
     // back (removed if the mobo is not large enough)
     if (mobo_ff != "mITX" && mobo_ff != "mDTX" && mobo_ff != "mATX") 
         translate([(width - fan_size) / 2, 
                     depth - ext_sidelen - alu_thickness - rad_depth, 
-                    unit_space + ext_sidelen + rad_bottom_clearance])
+                    ext_sidelen + rad_bottom_clearance])
             radiator();
 }

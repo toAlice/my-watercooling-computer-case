@@ -5,37 +5,37 @@ use <extrusions.scad>
 module mainframes() {
     // axisx
     // axisx ul
-    translate([ext_sidelen, depth - ext_sidelen, height - unit_space - ext_sidelen]) {
+    translate([ext_sidelen, depth - ext_sidelen, height - ext_sidelen]) {
         xext(width - ext_sidelen * 2);
     }
     // axisx ur
-    translate([ext_sidelen, 0, height - unit_space - ext_sidelen]) {
+    translate([ext_sidelen, 0, height - ext_sidelen]) {
         xext(width - ext_sidelen * 2);
     }
     // axisx lr
-    translate([ext_sidelen, 0, unit_space]) {
+    translate([ext_sidelen, 0, 0]) {
         xext(width - ext_sidelen * 2);
     }
     // axisx ll
-    translate([ext_sidelen, depth - ext_sidelen, unit_space]) {
+    translate([ext_sidelen, depth - ext_sidelen, 0]) {
         xext(width - ext_sidelen * 2);
     }
 
     // asixy
     // asixy ul
-    translate([0, ext_sidelen, height - unit_space - ext_sidelen]) {
+    translate([0, ext_sidelen, height - ext_sidelen]) {
         yext(depth - ext_sidelen * 2);
     }
     // asixy ur
-    translate([width - ext_sidelen, ext_sidelen, height - unit_space - ext_sidelen]) {
+    translate([width - ext_sidelen, ext_sidelen, height - ext_sidelen]) {
         yext(depth - ext_sidelen * 2);
     }
     // asixy lr
-    translate([width - ext_sidelen, ext_sidelen, unit_space]) {
+    translate([width - ext_sidelen, ext_sidelen, 0]) {
         yext(depth - ext_sidelen * 2);
     }
     // asixy ll
-    translate([0, ext_sidelen, unit_space]) {
+    translate([0, ext_sidelen, 0]) {
         yext(depth - ext_sidelen * 2);
     }
 
@@ -61,27 +61,27 @@ module mainframes() {
     // mobo mount row 0
     translate([ width - ext_sidelen, 
                 ext_sidelen + alu_thickness + rad_depth 
-                    + rad_front_clearance - ext_sidelen / 2  
+                    + front_rad_clearance - ext_sidelen / 2  
                     + screw_row_0_to_top, 
-                unit_space + ext_sidelen ]) {
-        zext(height - unit_space * 2 - ext_sidelen * 2);
+                ext_sidelen ]) {
+        zext(height - ext_sidelen * 2);
     }
     // mobo mount row 1
     translate([ width - ext_sidelen, 
                 ext_sidelen + alu_thickness + rad_depth 
-                    + rad_front_clearance - ext_sidelen / 2  
+                    + front_rad_clearance - ext_sidelen / 2  
                     + screw_row_1_to_top, 
-                unit_space + ext_sidelen ]) {
-        zext(height - unit_space * 2 - ext_sidelen * 2);
+                ext_sidelen ]) {
+        zext(height - ext_sidelen * 2);
     }
     // mobo mount row 2
     if (mobo_ff != "mITX" && mobo_ff != "mDTX") 
         translate([ width - ext_sidelen, 
                     ext_sidelen + alu_thickness + rad_depth 
-                        + rad_front_clearance - ext_sidelen / 2  
+                        + front_rad_clearance - ext_sidelen / 2  
                         + screw_row_2_to_top, 
-                    unit_space + ext_sidelen ]) {
-            zext(height - unit_space * 2 - ext_sidelen * 2);
+                    ext_sidelen ]) {
+            zext(height - ext_sidelen * 2);
         }
 }
 

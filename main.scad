@@ -11,12 +11,13 @@ use <pumps.scad>
 
 mainframes();
 rad_fans();
-rad_fan_mounts();
+rad_fan_ext_mount();
+if(sandwich) rad_fan_mount();
 radiators();
 
 translate([ width - (ext_sidelen + mobo_clearance), 
-            ext_sidelen + alu_thickness + rad_depth + rad_front_clearance, 
-            height - unit_space - ext_sidelen / 2 + screw_col_0_to_back - mobo_offset ]) {
+            ext_sidelen + alu_thickness + rad_depth + front_rad_clearance, 
+            height - ext_sidelen / 2 + screw_col_0_to_back - mobo_offset ]) {
     rotate([ -90, 0, 0 ]) {
         rotate([ 0, -90, 0 ]) {
             mainboard();
@@ -46,69 +47,69 @@ translate([ width - (ext_sidelen + mobo_clearance),
 if (mobo_ff != "mITX" && mobo_ff != "mDTX") {
     translate([ width - ext_sidelen - psu_atx_height - psu_bottom_clearance, 
                 ext_sidelen + rad_depth 
-                        + rad_front_clearance + screw_row_2_to_top 
+                        + front_rad_clearance + screw_row_2_to_top 
                         - ext_sidelen / 2 - psu_length, 
-                unit_space + ext_sidelen + psu_atx_width + psu_side_clearance ]) {
+                ext_sidelen + psu_atx_width + psu_side_clearance ]) {
         rotate([ 0, 90, 0 ]) {
             atx_psu(psu_length);
         }
     }
     translate([ width - ext_sidelen - psu_bottom_clearance - psu_atx_height,
                 ext_sidelen + rad_depth 
-                        + rad_front_clearance + screw_row_2_to_top 
+                        + front_rad_clearance + screw_row_2_to_top 
                         - ext_sidelen / 2,
-                unit_space ]) {
+                0 ]) {
         atx_corner_mount();
     }
 } else {
     translate([ width - ext_sidelen - psu_atx_height - psu_bottom_clearance, 
                 depth - psu_length, 
-                unit_space + ext_sidelen + psu_atx_width + psu_side_clearance ]) {
+                ext_sidelen + psu_atx_width + psu_side_clearance ]) {
         rotate([ 0, 90, 0 ]) {
             atx_psu(psu_length);
         }
     }
     translate([ width - ext_sidelen - psu_bottom_clearance - psu_atx_height,
                 depth,
-                unit_space ]) {
+                0 ]) {
         atx_corner_mount();
     }
 }
 
 if (mobo_ff != "mITX" && mobo_ff != "mDTX") 
     translate([ ext_sidelen,
-                rad_depth + rad_front_clearance + screw_row_2_to_top 
+                rad_depth + front_rad_clearance + screw_row_2_to_top 
                     - ext_sidelen / 2,
-                unit_space ]) {
+                0 ]) {
         xext(width - ext_sidelen * 2);
     }
 translate([ ext_sidelen,
-            rad_depth + rad_front_clearance + screw_row_2_to_top 
+            rad_depth + front_rad_clearance + screw_row_2_to_top 
                 + ext_sidelen / 2 - psu_length,
-            unit_space ]) {
+            0 ]) {
     xext(width - ext_sidelen * 2);
 }
 translate([ ext_sidelen,
-            rad_depth + rad_front_clearance + screw_row_2_to_top 
+            rad_depth + front_rad_clearance + screw_row_2_to_top 
                 + ext_sidelen + ext_sidelen / 2 
                 - psu_length - pump_mount_size,
-            unit_space ]) {
+            0 ]) {
     xext(width - ext_sidelen * 2);
 }
 
 translate([ pump_mount_size + ext_sidelen, 
-            rad_depth + rad_front_clearance + screw_row_2_to_top + ext_sidelen 
+            rad_depth + front_rad_clearance + screw_row_2_to_top + ext_sidelen 
                 + ext_sidelen / 2 - psu_length - pump_mount_size, 
-            unit_space + ext_sidelen]) 
+            ext_sidelen]) 
     rotate([ 0, 0, 90 ]) 
         pumps();
 
 translate([ ext_sidelen,
             ext_sidelen + alu_thickness + rad_depth
-            + rad_front_clearance + pci_socket_to_top 
+            + front_rad_clearance + pci_socket_to_top 
             + pci_socket_distance * pci_shift - gpu_pcb_thickness / 2 
             - pci_mount_thickness - (21.59 - 18.42) 
             - (mobo_offset + (57.15 - 49.65) - 9.40) / 2 
             - pci_mount_thickness,
-            height - unit_space ]) 
+            height ]) 
     pcie_mount();

@@ -61,7 +61,6 @@ module fan(size = 120, thickness = 25, blade = 9,
             }
         }
     }
-    
 
     // blade
     color("#976961") translate([size / 2, size / 2, 0]) {
@@ -118,7 +117,7 @@ module rad_fans() {
                     ext_sidelen + rad_bottom_clearance + rad_bottom_height]) {
             fan20(false);
             translate([0, 0, fan_size]) fan20(false);
-            if (sandwich) {
+            if (sandwich && mobo_ff != "mATX") {
                 translate([ 0, 
                             -alu_thickness - rad_depth - alu_thickness - fan_thickness, 
                             0 ]) fan20(false);

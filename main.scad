@@ -11,8 +11,7 @@ use <pumps.scad>
 
 mainframes();
 rad_fans();
-rad_fan_ext_mount();
-if(sandwich) rad_fan_mount();
+rad_ext_fan_mount();
 radiators();
 
 translate([ width - (ext_sidelen + mobo_clearance), 
@@ -44,6 +43,7 @@ translate([ width - (ext_sidelen + mobo_clearance),
         }
 }
 
+psu_mount();
 if (mobo_ff != "mITX" && mobo_ff != "mDTX") {
     translate([ width - ext_sidelen - psu_atx_height - psu_bottom_clearance, 
                 ext_sidelen + rad_depth 
@@ -54,13 +54,6 @@ if (mobo_ff != "mITX" && mobo_ff != "mDTX") {
             atx_psu(psu_length);
         }
     }
-    translate([ width - ext_sidelen - psu_bottom_clearance - psu_atx_height,
-                ext_sidelen + rad_depth 
-                        + front_rad_clearance + screw_row_2_to_top 
-                        - ext_sidelen / 2,
-                0 ]) {
-        atx_corner_mount();
-    }
 } else {
     translate([ width - ext_sidelen - psu_atx_height - psu_bottom_clearance, 
                 depth - psu_length, 
@@ -69,34 +62,9 @@ if (mobo_ff != "mITX" && mobo_ff != "mDTX") {
             atx_psu(psu_length);
         }
     }
-    translate([ width - ext_sidelen - psu_bottom_clearance - psu_atx_height,
-                depth,
-                0 ]) {
-        atx_corner_mount();
-    }
 }
 
-if (mobo_ff != "mITX" && mobo_ff != "mDTX") 
-    translate([ ext_sidelen,
-                rad_depth + front_rad_clearance + screw_row_2_to_top 
-                    - ext_sidelen / 2,
-                0 ]) {
-        xext(width - ext_sidelen * 2);
-    }
-translate([ ext_sidelen,
-            rad_depth + front_rad_clearance + screw_row_2_to_top 
-                + ext_sidelen / 2 - psu_length,
-            0 ]) {
-    xext(width - ext_sidelen * 2);
-}
-translate([ ext_sidelen,
-            rad_depth + front_rad_clearance + screw_row_2_to_top 
-                + ext_sidelen + ext_sidelen / 2 
-                - psu_length - pump_mount_size,
-            0 ]) {
-    xext(width - ext_sidelen * 2);
-}
-
+pump_mount();
 translate([ pump_mount_size + ext_sidelen, 
             rad_depth + front_rad_clearance + screw_row_2_to_top + ext_sidelen 
                 + ext_sidelen / 2 - psu_length - pump_mount_size, 

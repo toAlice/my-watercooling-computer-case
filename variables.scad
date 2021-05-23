@@ -7,6 +7,7 @@ mobo_ff = "ATX";
 // mobo_ff = "mITX";
 
 sandwich = true;
+unit_space = 5;
 
 function inches2mm(inches = 0) = (25.4 * inches);
 
@@ -66,8 +67,8 @@ mobo_height = mobo_ff == "mITX" ? mITX_height
 // offset + screw_col_0_to_back > extlen + 2 (assuming use M4 screws)
 // and offset + screw_col_0_to_back ~= extlen / 2 (assuming use M4 screws)
 mobo_offset = ext_sidelen / 2 + 4; 
-
-unit_space = 5;
+mobo_clearance = 5;
+mobo_io_space = unit_space * 2;
 
 alu_ext_screw_hole_size = 4;
 m3_screw_hole_size = 3;
@@ -106,7 +107,7 @@ pci_shift = (mobo_ff == "mITX" || mobo_ff == "mDTX" || mobo_ff == "mATX") ? 0 : 
 pci_lock_multiplier = ((mobo_ff == "mITX" || mobo_ff == "mDTX") ? 4 : 7)
                        - pci_shift;
 
-mobo_clearance = 5;
+
 
 psu_length = 150;
 psu_in_cabel_space = 40;
@@ -118,11 +119,10 @@ reservoir_height = 300;
 
 height = ext_sidelen 
         + max(rad_bottom_clearance + rad_full_height + rad_top_clearance, 
-            psu_side_clearance + psu_atx_width + psu_side_clearance 
-                + max(mobo_width, gpu_pcb_length) + mobo_offset) 
+            psu_side_clearance + psu_atx_width + psu_side_clearance + mobo_io_space
+                + max(mobo_width, gpu_pcb_length) + mobo_offset - ext_sidelen) 
         + ext_sidelen;
 width = ext_sidelen + unit_space + fan_size + unit_space + ext_sidelen;
 depth = ext_sidelen + alu_thickness + rad_depth + front_rad_clearance
         + mobo_height + back_rad_clearance + rad_depth + alu_thickness 
         + ext_sidelen;
-

@@ -97,7 +97,8 @@ module rad_fans() {
     // front
     translate([(width - fan_size) / 2, 
                 ext_sidelen - fan_thickness, 
-                ext_sidelen + rad_bottom_clearance + rad_bottom_height]) {
+                height - ext_sidelen - rad_top_clearance
+                    - rad_top_height - fan_size * 2]) {
         fan20();
         translate([0, 0, fan_size]) fan20();
         if (sandwich) {
@@ -114,7 +115,9 @@ module rad_fans() {
     if (mobo_ff != "mITX" && mobo_ff != "mDTX") {
         translate([(width - fan_size) / 2, 
                     depth - ext_sidelen, 
-                    ext_sidelen + rad_bottom_clearance + rad_bottom_height]) {
+                    // ext_sidelen + rad_bottom_clearance + rad_bottom_height]) {
+                    height - ext_sidelen - rad_top_clearance
+                    - rad_top_height - fan_size * 2]) {
             fan20(false);
             translate([0, 0, fan_size]) fan20(false);
             if (sandwich && mobo_ff != "mATX") {
@@ -129,159 +132,138 @@ module rad_fans() {
     }
 }
 
-module rad_fan_ext_mount() {
-    module fan20_mount() {
-        screw_spacing = 6;
-        module _slice() {
-            difference() {
-                polygon([
-                    [0, 0],
-                    [0, fan_size / 2],
-                    [ext_sidelen + unit_space 
-                        + (fan_size - min(rad_mounting_holes, fan_mounting_holes)) / 2
-                        + screw_spacing, fan_size / 2],
-                    [ext_sidelen + unit_space 
-                        + (fan_size - min(rad_mounting_holes, fan_mounting_holes)) / 2
-                        + screw_spacing, 
-                        fan_size / 2 
-                        - (fan_size - min(rad_mounting_holes, fan_mounting_holes)) / 2
-                        - screw_spacing],
-                    [ext_sidelen, 
-                        fan_size / 2 
-                        - (fan_size - min(rad_mounting_holes, fan_mounting_holes))
-                        - screw_spacing - 2 - unit_space],
-                    [ext_sidelen, 0]
-                ]);
-                translate([ ext_sidelen / 2,
-                            fan_size / 2 - ext_sidelen / 2 ]) {
-                    circle(d = alu_ext_screw_hole_size);
-                }
-                translate([ (width - fan_mounting_holes) / 2,
-                            fan_mounting_holes / 2 ]) {
-                    circle(d = m3_screw_hole_size);
-                }
-                translate([ (width - rad_mounting_holes) / 2,
-                            rad_mounting_holes / 2 ]) {
-                    circle(d = m3_screw_hole_size);
-                }
+module rad_ext_fan_mount() {
+    module vert() {
+        translate([0, alu_thickness, 0]) rotate([90, 0, 0]) children([0:$children-1]);
+    }
+    module verti() {
+        rotate([90, 0, 180]) children([0:$children-1]);
+    }
+
+    screw_spacing = 6;
+    module rad_ext_fan_slice() {
+        difference() {
+            polygon([
+                [0, 0],
+                [0, fan_size / 2],
+                [ext_sidelen + unit_space 
+                    + (fan_size - min(rad_mounting_holes, fan_mounting_holes)) / 2
+                    + screw_spacing, fan_size / 2],
+                [ext_sidelen + unit_space 
+                    + (fan_size - min(rad_mounting_holes, fan_mounting_holes)) / 2
+                    + screw_spacing, 
+                    fan_size / 2 
+                    - (fan_size - min(rad_mounting_holes, fan_mounting_holes)) / 2
+                    - screw_spacing],
+                [ext_sidelen, 
+                    fan_size / 2 
+                    - (fan_size - min(rad_mounting_holes, fan_mounting_holes))
+                    - screw_spacing - 2 - unit_space],
+                [ext_sidelen, 0]
+            ]);
+            translate([ ext_sidelen / 2,
+                        fan_size / 2 - ext_sidelen / 2 ]) {
+                circle(d = alu_ext_screw_hole_size);
+            }
+            translate([ (width - fan_mounting_holes) / 2,
+                        fan_mounting_holes / 2 ]) {
+                circle(d = m3_screw_hole_size);
+            }
+            translate([ (width - rad_mounting_holes) / 2,
+                        rad_mounting_holes / 2 ]) {
+                circle(d = m3_screw_hole_size);
             }
         }
+    }
+    module rad_fan_slice() {
+        difference() {
+            polygon([
+                [ext_sidelen, 0],
+                [ext_sidelen, fan_size / 2],
+                [ext_sidelen + unit_space 
+                    + (fan_size - min(rad_mounting_holes, fan_mounting_holes)) / 2
+                    + screw_spacing, fan_size / 2],
+                [ext_sidelen + unit_space 
+                    + (fan_size - min(rad_mounting_holes, fan_mounting_holes)) / 2
+                    + screw_spacing, 
+                    fan_size / 2 
+                    - (fan_size - min(rad_mounting_holes, fan_mounting_holes)) / 2
+                    - screw_spacing],
+                [ext_sidelen + unit_space, 
+                    fan_size / 2 
+                    - (fan_size - min(rad_mounting_holes, fan_mounting_holes))
+                    - screw_spacing - 2 - unit_space],
+                [ext_sidelen + unit_space, 0]
+            ]);
+            translate([ ext_sidelen / 2,
+                        fan_size / 2 - ext_sidelen / 2 ]) {
+                circle(d = alu_ext_screw_hole_size);
+            }
+            translate([ (width - fan_mounting_holes) / 2,
+                        fan_mounting_holes / 2 ]) {
+                circle(d = m3_screw_hole_size);
+            }
+            translate([ (width - rad_mounting_holes) / 2,
+                        rad_mounting_holes / 2 ]) {
+                circle(d = m3_screw_hole_size);
+            }
+        }
+    }
+
+    module _mount() {
         color("#AF9FEF") {
             translate([ 0, 
                         fan_mounting_holes / 2 + (fan_size - fan_mounting_holes) / 2,
                         0 ]) {
                 linear_extrude(height = alu_thickness) {
                     union() {
-                        translate([ 0, -0.01, 0 ]) _slice();
-                        scale([1, -1, 1]) _slice();
-                    }        
+                        // translate([ 0, -0.01, 0 ]) rad_ext_fan_slice();
+                        // scale([1, -1, 1]) rad_ext_fan_slice();
+                        // translate([ 0, -0.01, 0 ]) rad_fan_slice();
+                        // scale([1, -1, 1]) rad_fan_slice();
+                        translate([ 0, -0.01, 0 ]) children([0:$children-1]);
+                        scale([1, -1, 1]) children([0:$children-1]);
+                    }
                 }
             }
         }
     }
-    module vert() {
-        translate([0, alu_thickness, 0]) rotate([90, 0, 0]) fan20_mount();
-    }
-    module verti() {
-        rotate([90, 0, 180]) fan20_mount();
-    }
     module _set() {
-        vert();
-        translate([0, 0, fan_size]) vert();
+        vert() children([0:$children-1]);
+        translate([0, 0, fan_size]) vert() children([0:$children-1]);
         translate([width, 0, 0]) {
-            verti();
-            translate([0, 0, fan_size]) verti();
+            verti() children([0:$children-1]);
+            translate([0, 0, fan_size]) verti() children([0:$children-1]);
         }
     }
     // front
-    translate([0, 
+    translate([ 0, 
                 ext_sidelen, 
-                ext_sidelen + rad_bottom_clearance + rad_bottom_height]) {
-        _set();
+                height - ext_sidelen - rad_top_clearance
+                    - rad_top_height - fan_size * 2 ]) {
+        _set() _mount() rad_ext_fan_slice();
     }
     // back
     if (mobo_ff != "mITX" && mobo_ff != "mDTX") 
         translate([ 0, 
                     depth - ext_sidelen - alu_thickness, 
-                    ext_sidelen + rad_bottom_clearance + rad_bottom_height]) 
-            _set();
-}
+                    height - ext_sidelen - rad_top_clearance
+                    - rad_top_height - fan_size * 2]) 
+            _set() _mount() rad_ext_fan_slice();
 
-module rad_fan_mount() {
-    module fan20_mount() {
-        screw_spacing = 6;
-        module _slice() {
-            difference() {
-                polygon([
-                    [ext_sidelen, 0],
-                    [ext_sidelen, fan_size / 2],
-                    [ext_sidelen + unit_space 
-                        + (fan_size - min(rad_mounting_holes, fan_mounting_holes)) / 2
-                        + screw_spacing, fan_size / 2],
-                    [ext_sidelen + unit_space 
-                        + (fan_size - min(rad_mounting_holes, fan_mounting_holes)) / 2
-                        + screw_spacing, 
-                        fan_size / 2 
-                        - (fan_size - min(rad_mounting_holes, fan_mounting_holes)) / 2
-                        - screw_spacing],
-                    [ext_sidelen + unit_space, 
-                        fan_size / 2 
-                        - (fan_size - min(rad_mounting_holes, fan_mounting_holes))
-                        - screw_spacing - 2 - unit_space],
-                    [ext_sidelen + unit_space, 0]
-                ]);
-                translate([ ext_sidelen / 2,
-                            fan_size / 2 - ext_sidelen / 2 ]) {
-                    circle(d = alu_ext_screw_hole_size);
-                }
-                translate([ (width - fan_mounting_holes) / 2,
-                            fan_mounting_holes / 2 ]) {
-                    circle(d = m3_screw_hole_size);
-                }
-                translate([ (width - rad_mounting_holes) / 2,
-                            rad_mounting_holes / 2 ]) {
-                    circle(d = m3_screw_hole_size);
-                }
-            }
-        }
-        color("#AF9FEF") {
-            translate([ 0, 
-                        fan_mounting_holes / 2 + (fan_size - fan_mounting_holes) / 2,
-                        0 ]) {
-                linear_extrude(height = alu_thickness) {
-                    union() {
-                        translate([ 0, -0.01, 0 ]) _slice();
-                        scale([1, -1, 1]) _slice();
-                    }        
-                }
-            }
-        }
-    }
-    module vert() {
-        translate([0, alu_thickness, 0]) rotate([90, 0, 0]) fan20_mount();
-    }
-    module verti() {
-        rotate([90, 0, 180]) fan20_mount();
-    }
-    module _set() {
-        vert();
-        translate([0, 0, fan_size]) vert();
-        translate([width, 0, 0]) {
-            verti();
-            translate([0, 0, fan_size]) verti();
-        }
-    }
-    // front
-    translate([0, 
-                ext_sidelen + rad_depth + alu_thickness, 
-                ext_sidelen + rad_bottom_clearance + rad_bottom_height]) {
-        _set();
-    }
-    // back
-    if (mobo_ff != "mITX" && mobo_ff != "mDTX" && mobo_ff != "mATX") 
+    if (sandwich) {
+        // front
         translate([ 0, 
-                    depth - ext_sidelen - rad_depth - alu_thickness * 2, 
-                    ext_sidelen + rad_bottom_clearance + rad_bottom_height]) 
-            _set();
+                    ext_sidelen + rad_depth + alu_thickness, 
+                    height - ext_sidelen - rad_top_clearance
+                        - rad_top_height - fan_size * 2]) 
+            _set() _mount() rad_fan_slice();
+        // back
+        if (mobo_ff != "mITX" && mobo_ff != "mDTX" && mobo_ff != "mATX") 
+            translate([ 0, 
+                        depth - ext_sidelen - rad_depth - alu_thickness * 2, 
+                        height - ext_sidelen - rad_top_clearance
+                        - rad_top_height - fan_size * 2]) 
+                _set() _mount() rad_fan_slice();
+    }
 }
-

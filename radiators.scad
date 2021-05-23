@@ -35,13 +35,15 @@ module radiators() {
     // front
     translate([ (width - fan_size) / 2, 
                 ext_sidelen + alu_thickness, 
-                ext_sidelen + rad_bottom_clearance ]) {
+                height - ext_sidelen - rad_top_clearance
+                    - rad_top_height - fan_size * 2 - rad_bottom_height ]) {
         radiator();
     }
     // back (removed if the mobo is not large enough)
     if (mobo_ff != "mITX" && mobo_ff != "mDTX" && mobo_ff != "mATX") 
         translate([(width - fan_size) / 2, 
                     depth - ext_sidelen - alu_thickness - rad_depth, 
-                    ext_sidelen + rad_bottom_clearance])
+                    height - ext_sidelen - rad_top_clearance
+                    - rad_top_height - fan_size * 2 - rad_bottom_height ])
             radiator();
 }

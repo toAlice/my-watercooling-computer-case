@@ -141,3 +141,132 @@ module pcie_mount() {
                     lineup() 
                         _mount();
 }
+
+module psu_mount() {
+    module hexagon(size = 6) {
+        polygon([
+            [-size / 2, size * sqrt(3) / 2],
+            [size / 2, size * sqrt(3) / 2],
+            [size, 0],
+            [size / 2, -size * sqrt(3) / 2],
+            [-size / 2, -size * sqrt(3) / 2],
+            [-size, 0]
+        ]);
+    }
+    module _frame() {
+        difference() {
+            polygon([
+                [0, ext_sidelen + psu_bottom_clearance],
+                [0, ext_sidelen + psu_bottom_clearance + psu_atx_height],
+                [ext_sidelen + psu_side_clearance + psu_atx_width,
+                    ext_sidelen + psu_bottom_clearance + psu_atx_height],
+                [ext_sidelen + psu_side_clearance + psu_atx_width, 0],
+                [ext_sidelen + psu_side_clearance, 0],
+                [ext_sidelen + psu_side_clearance, 
+                    ext_sidelen + psu_bottom_clearance]
+            ]);
+            polygon([
+                [ext_sidelen + psu_side_clearance + 6,
+                    ext_sidelen + psu_bottom_clearance + 6],
+                [ext_sidelen + psu_side_clearance + 6,
+                    ext_sidelen + psu_bottom_clearance + psu_atx_height - 6],
+                [ext_sidelen + psu_side_clearance + psu_atx_width - 6,
+                    ext_sidelen + psu_bottom_clearance + psu_atx_height - 6],
+                [ext_sidelen + psu_side_clearance + psu_atx_width - 6,
+                    ext_sidelen + psu_bottom_clearance + 6]
+            ]);
+        }
+        translate([ext_sidelen + psu_side_clearance, 
+            ext_sidelen + psu_bottom_clearance]) {
+            translate([6, 80]) hexagon();
+            translate([30, 6]) hexagon();
+            translate([144, 16]) rotate([0, 0, 30]) hexagon();
+            translate([144, 80]) hexagon();
+        }
+    }
+    module _slice() {
+        difference() {
+            _frame();
+            translate([ext_sidelen + psu_side_clearance, 
+                ext_sidelen + psu_bottom_clearance]) {
+                translate([6, 80]) circle(d = alu_ext_screw_hole_size);
+                translate([30, 6]) circle(d = alu_ext_screw_hole_size);
+                translate([144, 16]) circle(d = alu_ext_screw_hole_size);
+                translate([144, 80]) circle(d = alu_ext_screw_hole_size);
+            }
+            translate([ ext_sidelen / 2, 
+                        ext_sidelen + psu_bottom_clearance + ext_sidelen / 2,
+                        0 ]) {
+                circle(d = alu_ext_screw_hole_size);
+            }
+            translate([ ext_sidelen / 2, 
+                        ext_sidelen + psu_bottom_clearance 
+                        + psu_atx_height - ext_sidelen / 2 ]) {
+                circle(d = alu_ext_screw_hole_size);
+            }
+            translate([ ext_sidelen + psu_side_clearance 
+                        + ext_sidelen / 2,
+                        ext_sidelen / 2 ]) {
+                circle(d = alu_ext_screw_hole_size);
+            }
+            translate([ ext_sidelen + psu_side_clearance 
+                        + psu_atx_width - ext_sidelen / 2,
+                        ext_sidelen / 2 ]) {
+                circle(d = alu_ext_screw_hole_size);
+            }
+        }
+    }
+    module corner_mount() {
+        translate([ psu_atx_height + ext_sidelen + psu_bottom_clearance, 
+                    alu_thickness, 0 ]) {
+            rotate([ 90, -90, 0]) {
+                color("#2F1F3F") {
+                    linear_extrude(alu_thickness) {
+                        _slice();
+                    }
+                }
+            }
+        }
+    }
+    
+    // frames
+    if (mobo_ff != "mITX" && mobo_ff != "mDTX") 
+        translate([ ext_sidelen,
+                    rad_depth + front_rad_clearance + screw_row_2_to_top 
+                    - ext_sidelen / 2,
+                    0 ]) xext(width - ext_sidelen * 2);
+    translate([ ext_sidelen,
+                rad_depth + front_rad_clearance + screw_row_2_to_top 
+                + ext_sidelen / 2 - psu_length,
+                0 ]) xext(width - ext_sidelen * 2);
+
+    
+
+    if (mobo_ff != "mITX" && mobo_ff != "mDTX") {
+        translate([ width - ext_sidelen - psu_bottom_clearance - psu_atx_height,
+                    ext_sidelen + rad_depth 
+                    + front_rad_clearance + screw_row_2_to_top 
+                    - ext_sidelen / 2,
+                    0 ]) {
+            corner_mount();
+        }
+    } else {
+        translate([ width - ext_sidelen - psu_bottom_clearance - psu_atx_height,
+                    depth,
+                    0 ]) {
+            corner_mount();
+        }
+    }
+}
+
+module pump_mount() {
+    translate([ ext_sidelen,
+                rad_depth + front_rad_clearance + screw_row_2_to_top 
+                + ext_sidelen + ext_sidelen / 2 
+                - psu_length - pump_mount_size,
+                0 ]) xext(width - ext_sidelen * 2);
+    translate([ 0,
+                rad_depth + front_rad_clearance + screw_row_2_to_top
+                + ext_sidelen - psu_length - pump_mount_size / 2,
+                ext_sidelen ]) zext(height - ext_sidelen * 2);
+}
